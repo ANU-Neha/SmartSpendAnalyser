@@ -1,0 +1,25 @@
+import pymongo
+import pandas as pd
+
+# Connect to MongoDB
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+db = client["smartspend_db"]  # replace with your DB name
+collection = db["receipts"]   # replace with your collection name
+
+# Fetch all data
+data = list(collection.find())
+
+# Remove MongoDB ObjectId
+for record in data:
+    record.pop("_id", None)
+
+# Convert to DataFrame
+df = pd.DataFrame(data)
+
+# Save as JSON
+df.to_json("extracted_receipts.json", orient="records", indent=2)
+
+# Save as CSV
+df.to_csv("extracted_receipts.csv", index=False)
+
+print("✅ Data exported successfully as 'extracted_receipts.json' and 'extracted_receipts.csv'")
