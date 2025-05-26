@@ -21,4 +21,8 @@ def create_app():
     app.register_blueprint(main)
     return app
 
+# --- YOU NEED TO ADD THIS LINE ---
+app = create_app()
+# ---------------------------------
+
 # The 'app' variable is now directly available for gunicorn to find
