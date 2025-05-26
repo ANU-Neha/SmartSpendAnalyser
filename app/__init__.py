@@ -1,21 +1,23 @@
 from flask import Flask
-from flask_cors import CORS # Import CORS
+from flask_cors import CORS
 import os
-from dotenv import load_dotenv # Import load_dotenv
+from dotenv import load_dotenv
 
-def create_app():
-    # Load environment variables from .env file
-    load_dotenv()
+# Load environment variables (do this at the module level if you want)
+load_dotenv()
 
-    app = Flask(__name__)
-    CORS(app) # Enable CORS for all routes
+# Create the app instance globally
+app = Flask(__name__)
+CORS(app) # Enable CORS for all routes
 
-    # Configuration for uploads
-    app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'uploads')
-    # Ensure the upload folder exists
-    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+# Configuration for uploads
+app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'uploads')
+# Ensure the upload folder exists
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-    from .routes import main
-    app.register_blueprint(main)
+# Register blueprints here
+from .routes import main
+app.register_blueprint(main)
 
-    return app
+# No create_app function anymore if you go this route
+# The 'app' variable is now directly available for gunicorn to find
