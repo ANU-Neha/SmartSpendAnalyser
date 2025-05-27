@@ -35,9 +35,21 @@ export default function Dashboard() {
             <SpendingSummary />
           </Paper>
         </Grid>
-        
+
+
+        {/* --- MODIFY THIS GRID ITEM AND PAPER --- */}
         <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 2 }}>
+          <Paper
+            sx={{
+              p: 2,
+              display: 'flex', // Use flexbox for internal layout
+              flexDirection: 'column', // Stack children vertically
+              height: '100%', // Take full height of parent Grid item (if parent has height)
+              maxHeight: { xs: 'none', md: '400px' }, // Set a max height (e.g., 400px, adjust as needed)
+              overflowY: 'auto', // Enable vertical scrolling if content exceeds maxHeight
+              // overflowX: 'hidden', // Hide horizontal scroll if not needed
+            }}
+          >
             <ReactTransactions />
           </Paper>
         </Grid>
@@ -45,3 +57,9 @@ export default function Dashboard() {
     </Layout>
   );
 }
+
+
+
+
+        
+     
