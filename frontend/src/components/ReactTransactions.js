@@ -1,6 +1,6 @@
 import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 
-export default function RecentTransactions() {
+export default function ReactTransactions() {
   const transactions = [
     { id: 1, store: 'Grocery Store', amount: 85.50, date: '2023-05-15' },
     { id: 2, store: 'Gas Station', amount: 45.20, date: '2023-05-14' },

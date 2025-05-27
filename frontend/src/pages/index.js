@@ -1,7 +1,7 @@
 import Layout from '../components/Layout';
 import { Grid, Paper, Typography } from '@mui/material';
 import { BarChart, PieChart } from '../components/Charts';
-import RecentTransactions from '../components/ReactTransactions';
+import ReactTransactions from '../components/ReactTransactions';
 import SpendingSummary from '../components/SpendingSummary';
 
 export default function Dashboard() {
@@ -38,7 +38,7 @@ export default function Dashboard() {
         
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 2 }}>
-            <RecentTransactions />
+            <ReactTransactions />
           </Paper>
         </Grid>
       </Grid>
