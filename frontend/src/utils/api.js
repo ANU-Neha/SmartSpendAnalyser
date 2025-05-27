@@ -35,3 +35,5 @@ export const getUserData = async (userId) => {
         throw error;
     }
 };
+
+export default api;

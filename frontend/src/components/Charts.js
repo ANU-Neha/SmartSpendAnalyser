@@ -1,48 +1,90 @@
+import React, { useState, useEffect } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from 'chart.js';
+import { Typography } from '@mui/material';
+
+// --- ADJUSTED IMPORT PATH HERE ---
+// This path assumes your chart component is in a folder one level above 'utils',
+// for example, if chart is in `src/components/` and api.js is in `src/utils/`.
+import api from '../utils/api'; // <--- THIS IS THE CORRECTED PATH
+
 ChartJS.register(...registerables);
 
-export function BarChart() {
-  const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    datasets: [
-      {
-        label: 'Spending',
-        data: [1200, 1900, 1500, 2000, 1800, 2200],
-        backgroundColor: 'rgba(211, 47, 47, 0.6)',
-        borderColor: 'rgba(211, 47, 47, 1)',
-        borderWidth: 1,
-      },
-    ],
-  };
+const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+};
 
-  return <Bar data={data} />;
+export function BarChart() {
+    const [chartData, setChartData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchBarChartData = async () => {
+            try {
+                // Using the imported 'api' instance
+                const response = await api.get('/api/charts/bar');
+                setChartData(response.data); // Axios puts data in .data
+            } catch (err) {
+                console.error("Failed to fetch bar chart data:", err);
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchBarChartData();
+    }, []);
+
+    if (loading) {
+        return <Typography>Loading bar chart...</Typography>;
+    }
+
+    if (error) {
+        return <Typography color="error">Error loading bar chart: {error.message}</Typography>;
+    }
+
+    if (!chartData) {
+        return <Typography>No bar chart data available.</Typography>;
+    }
+
+    return <Bar data={chartData} options={chartOptions} />;
 }
 
 export function PieChart() {
-  const data = {
-    labels: ['Food', 'Transport', 'Entertainment', 'Utilities', 'Other'],
-    datasets: [
-      {
-        data: [35, 25, 15, 15, 10],
-        backgroundColor: [
-          'rgba(211, 47, 47, 0.6)',
-          'rgba(176, 190, 197, 0.6)',
-          'rgba(229, 115, 115, 0.6)',
-          'rgba(207, 216, 220, 0.6)',
-          'rgba(239, 154, 154, 0.6)',
-        ],
-        borderColor: [
-          'rgba(211, 47, 47, 1)',
-          'rgba(176, 190, 197, 1)',
-          'rgba(229, 115, 115, 1)',
-          'rgba(207, 216, 220, 1)',
-          'rgba(239, 154, 154, 1)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+    const [chartData, setChartData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  return <Pie data={data} />;
+    useEffect(() => {
+        const fetchPieChartData = async () => {
+            try {
+                // Using the imported 'api' instance
+                const response = await api.get('/api/charts/pie');
+                setChartData(response.data); // Axios puts data in .data
+            } catch (err) {
+                console.error("Failed to fetch pie chart data:", err);
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPieChartData();
+    }, []);
+
+    if (loading) {
+        return <Typography>Loading pie chart...</Typography>;
+    }
+
+    if (error) {
+        return <Typography color="error">Error loading pie chart: {error.message}</Typography>;
+    }
+
+    if (!chartData) {
+        return <Typography>No pie chart data available.</Typography>;
+    }
+
+    return <Pie data={chartData} options={chartOptions} />;
 }
