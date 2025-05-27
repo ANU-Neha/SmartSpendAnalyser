@@ -1,5 +1,5 @@
 import Layout from '../components/Layout';
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Grid, Paper, Typography } from '@mui/material';
 import { BarChart, PieChart } from '../components/Charts';
 import RecentTransactions from '../components/RecentTransactions';
 import SpendingSummary from '../components/SpendingSummary';
