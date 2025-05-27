@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // Use environment variable for the backend URL
-const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+// You should change this line:
+const API_BASE_URL = 'https://smart-spend-analyzer.onrender.com'; // <--- CHANGE THIS LINE
 
 const api = axios.create({
     baseURL: API_BASE_URL,
